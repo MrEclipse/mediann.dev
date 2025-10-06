@@ -9,14 +9,14 @@
 1. Клонируйте репозиторий:
 
 ```bash
-git clone <your_repo_url>
+git clone <https://github.com/MrEclipse/mediann.dev.git>
 cd test_for_mediann.dev
 ```
 
 2. Создайте виртуальное окружение и активируйте его:
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 ```
 
 ```bash
@@ -94,10 +94,10 @@ app/             # Основной код приложения
   routes.py      # FastAPI роуты
   schemas.py     # Pydantic схемы
   services.py    # Сервисный слой
-kafka_data/      # Данные Kafka (для dev)
-pg_database/     # Данные PostgreSQL (для dev)
+kafka_data/      # Данные Kafka 
+pg_database/     # Данные PostgreSQL
 tests/           # Тесты
-.env             # Переменные окружения
+.env.dev             # Переменные окружения
 app.log          # Лог приложения
 docker-compose.yml
 Dockerfile
