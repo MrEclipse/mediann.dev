@@ -36,7 +36,7 @@ pip install -r requirements.txt
 4. Запустите docker compose:
 
 ```bash
-docker-compose up -d
+docker compose up --build
 ```
 
 Приложение будет доступно на `http://localhost:8000`.
@@ -48,21 +48,73 @@ docker-compose up -d
 **POST /applications**
 
 * Ввод: JSON с `user_name` и `description`.
+* ```
+  {"user_name": "mark",
+  "description": "big deal man"}
 * Действие: Создать новое приложение.
 * Ожидаемый результат: JSON с созданным приложением.
+* ```
+  {"id": 10,
+  "user_name": "mark",
+  "description": "big deal man",
+  "created_at": "2025-10-06T23:11:15.027915Z"}
 * Лог: `Сообщение отправлено в Kafka`.
 
 **GET /applications**
 
-* Ввод: Параметры `page` и `size`.
+* Ввод: Параметры `page` 4 и `size` 4.
 * Действие: Получить список приложений.
 * Ожидаемый результат: JSON-массив приложений.
+* ```
+  [{
+    "id": 5,
+    "user_name": "kakakaf6",
+    "description": "string",
+    "created_at": "2025-10-06T22:54:20.237931Z"
+  },
+  {
+    "id": 4,
+    "user_name": "kakakaf6",
+    "description": "string",
+    "created_at": "2025-10-06T22:54:20.068893Z"
+  },
+  {
+    "id": 3,
+    "user_name": "kakakaf6",
+    "description": "string",
+    "created_at": "2025-10-06T22:54:19.955358Z"
+  },
+  {
+    "id": 2,
+    "user_name": "kakakaf6",
+    "description": "string",
+    "created_at": "2025-10-06T22:54:19.851303Z"
+  }]
 
 **GET /applications с фильтром**
 
-* Ввод: Параметры `page`, `size`, `user_name`.
+* Ввод: Параметры `page` 1, `size` 3, `user_name` mark.
 * Действие: Получить список приложений по фильтру.
 * Ожидаемый результат: JSON-массив приложений только с указанным `user_name`.
+* ```
+  [{
+    "id": 15,
+    "user_name": "mark",
+    "description": "big deal man",
+    "created_at": "2025-10-06T23:13:12.483490Z"
+  },
+  {
+    "id": 14,
+    "user_name": "mark",
+    "description": "big deal man",
+    "created_at": "2025-10-06T23:13:12.350125Z"
+  },
+  {
+    "id": 13,
+    "user_name": "mark",
+    "description": "big deal man",
+    "created_at": "2025-10-06T23:13:12.222920Z"
+  }]
 
 ---
 

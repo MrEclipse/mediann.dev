@@ -46,22 +46,25 @@ class ApplicationService:
     async def get_applications(
             self, page: int = 1, size: int = 20, user_name: str | None = None
     ) -> Tuple[List[Application], int]:
-        """Получение списка приложений с фильтром и подсчетом общего количества"""
+        """Получение списка приложений с пагинацией, опционально фильтруя по имени"""
         from sqlalchemy import select, func
+
         try:
             stmt = select(Application)
-            if user_name:
+
+            if user_name is not None:
                 stmt = stmt.where(Application.user_name == user_name)
 
             total_stmt = select(func.count()).select_from(stmt.subquery())
-            stmt = stmt.order_by(Application.created_at.desc()).offset((page - 1) * size).limit(size)
-
             total_res = await self.db.execute(total_stmt)
             total = int(total_res.scalar_one())
 
+            stmt = stmt.order_by(Application.created_at.desc()).offset((page - 1) * size).limit(size)
             res = await self.db.execute(stmt)
-            items = list(res.scalars().all())
-        except Exception as e:
+            items = res.scalars().all()
+
+        except Exception:
             logger.exception("Ошибка получения списка приложений")
             raise
-        return items, total
+
+        return list(items), total

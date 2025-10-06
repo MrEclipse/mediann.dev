@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from dishka.integrations.fastapi import DishkaRoute, FromDishka, inject
 from app.schemas import ApplicationCreate, ApplicationRead
 from app.services import ApplicationService
@@ -24,7 +24,7 @@ async def list_applications(
         service: FromDishka[ApplicationService],
         page: int = 1,
         size: int = 20,
-        user_name: str | None = None,
+        user_name: str | None = Query(default=None, description="Filter by user_name"),
 ):
     """Получение списка приложений"""
     apps, _ = await service.get_applications(page, size, user_name)
