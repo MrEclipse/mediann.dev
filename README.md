@@ -40,7 +40,7 @@ docker compose up --build
 ```
 
 Приложение будет доступно на `http://localhost:8000`.
-
+Сваггер по стандартному `http://localhost:8000/docs`.
 ---
 
 ## 2. Тест кейсы (Swagger)
